@@ -5,24 +5,28 @@ import android.content.BroadcastReceiver;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.widget.Toast;
 import android.util.Log;
 import android.content.Context;
+import android.content.ComponentName;
 
 import java.util.List;
+
 
 public class StartOnBootReceiver extends BroadcastReceiver {
     public static final String TAG = "StartOnBootPlugin";
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Toast toast = Toast.makeText(context, "Starting stuff", Toast.LENGTH_SHORT);
+        toast.show();
+
         try {
-            String mainActivityName = getMainActivityName(context);
-            Intent serviceIntent = new Intent(context, Class.forName(mainActivityName));
-            serviceIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Log.d(TAG, "Starting " + mainActivityName + " on boot");
-            context.startActivity(serviceIntent);
-        } catch(Exception ex) {
-            Log.d(TAG, "Cannot start app on boot. Exception" + ex.toString());
+            Intent i = new Intent();
+            i.setComponent(new ComponentName("com.adobe.phonegap.push", "com.adobe.phonegap.push.RegistrationIntentService"));
+            context.startService(i);
+        } catch(Exceptoin ex) {
+            Log.w(TAG, "Cannot start service on boot. Exception" + ex.toString());
         }
     }
 

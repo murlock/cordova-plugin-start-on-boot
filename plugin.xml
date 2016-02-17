@@ -23,6 +23,8 @@
                 android:name="com.tsubik.cordova.start_on_boot.StartOnBootReceiver">
                 <intent-filter>
                     <action android:name="android.intent.action.BOOT_COMPLETED" />
+                    <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                    <action android:name="android.intent.action.USER_PRESENT" />
                 </intent-filter>
             </receiver>
         </config-file>
